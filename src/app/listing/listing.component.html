@@ -3,12 +3,22 @@
     <img class="poster" [src]="anime.poster">
     <div class="content">
       <ion-card-header>
-        <ion-card-title>{{anime.title}}</ion-card-title>
+        <div class="title">
+          <span class="center-text">{{anime.title}}</span>
+        </div>
+        <div class="spacer"></div>
+        <div class="chips">
+          <ion-chip>Votes: {{anime.votes}}</ion-chip>
+        </div>
       </ion-card-header>
       <ion-card-content>
         <p class="synopsis">
           {{anime.synopsis}}
         </p>
+        <div class="spacer"></div>
+        <ion-buttons>
+          <ion-button color="primary" fill="solid" size="large" (click)="vote()">Vote</ion-button>
+        </ion-buttons>
       </ion-card-content>
     </div>
   </div>

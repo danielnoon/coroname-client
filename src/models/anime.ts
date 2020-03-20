@@ -4,6 +4,8 @@ export class Anime {
     public title: string,
     public poster: string,
     public synopsis: string,
-    public nsfw: boolean
+    public nsfw: boolean,
+    public continuingSeries: boolean,
+    public votes: number
   ) {}
 }

@@ -23,21 +23,33 @@ export class ApiService {
   }): Promise<Response<T>> {
     try {
       let { route, method, headers, query, body } = options;
+
+      if (!headers) {
+        headers = new Headers();
+      }
+
       if (localStorage.getItem('token')) {
-        if (!headers) {
-          headers = new Headers();
-        }
         headers.append('auth-token', localStorage.getItem('token'));
       }
+
+      if (method === 'post') {
+        if (!headers.has('content-type')) {
+          headers.append('content-type', 'application/json');
+        }
+      }
+
       const response = await fetch(this.constructEndpoint(route, query), {
         method,
         headers,
         body
       });
+
       const json = (await response.json()) as Response<T> | Error;
+
       if (json.code == -1) {
         this.error(json as Error);
       }
+      
       return json as Response<T>;
     } catch (err) {
       this.error(err);

@@ -8,20 +8,20 @@ import { ApiService } from '../api-service.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  anime: Anime[] = [];
+  query: string;
 
   constructor(private api: ApiService) {}
 
-  anime: Anime[] = [];
-
   ngOnInit() {
-    this.getTopAnime();
+    // this.getTopAnime();
   }
 
-  async getTopAnime() {
+  async search() {
     const anime = await this.api.request<Anime[]>({
       route: 'anime/search',
       method: 'get',
-      query: 'q=Nichijou'
+      query: 'q=' + this.query
     });
 
     this.anime = anime.data;

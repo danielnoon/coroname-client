@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { TokenResponse } from 'src/models/token-response';
-import { Response } from 'src/models/response';
 import { Router } from '@angular/router';
 import { ApiService } from '../api-service.service';
 

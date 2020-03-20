@@ -5,3 +5,32 @@
 .poster {
   height: 300px;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+ion-card-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+ion-card-header {
+  display: flex;
+}
+
+.title {
+  display: flex;
+  font-size: 2em;
+  color: var(--ion-text-color);
+}
+
+.center-text {
+  margin: auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
