@@ -36,6 +36,22 @@ export class ListingComponent implements OnInit {
       this.anime.votes++;
       this.votedFor = true;
       User.votesAvailable--;
+      User.update();
+    }
+  }
+
+  async rescind() {
+    const result = await this.api.request({
+      route: 'anime/rescind',
+      method: 'post',
+      body: JSON.stringify({ id: this.anime.kitsuId })
+    });
+
+    if (result.code === 0) {
+      this.anime.votes--;
+      this.votedFor = false;
+      User.votesAvailable++;
+      User.update();
     }
   }
 

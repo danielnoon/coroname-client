@@ -30,7 +30,11 @@ export class User {
       this.votesAvailable = user['votesAvailable'];
       this.votedFor = user['votedFor'];
 
-      this.listeners.forEach(l => l());
+      this.update();
     }
+  }
+
+  static update() {
+    this.listeners.forEach(l => l());
   }
 }
