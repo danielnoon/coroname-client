@@ -9,6 +9,7 @@
 .content {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
 }
 
 ion-card-content {
@@ -33,4 +34,9 @@ ion-card-header {
 
 .spacer {
   flex: 1 1 auto;
+}
+
+ion-buttons {
+  display: flex;
+  flex-direction: row-reverse;
 }

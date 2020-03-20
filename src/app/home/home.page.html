@@ -6,6 +6,10 @@
       </ion-title>
       <ion-searchbar animated [(ngModel)]="query" (ionChange)="search()" debounce="500"></ion-searchbar>
     </div>
+    <div slot="end" class="end">
+      <ion-chip>Votes: {{votesAvailable}}</ion-chip>
+      <span class="username">{{username}}</span>
+    </div>
   </ion-toolbar>
 </ion-header>
 
