@@ -6,8 +6,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div id="container">
-    <ion-title size="large">It's coming...</ion-title>
-  </div>
+<ion-content>
+  <app-listing *ngFor="let item of anime" [anime]="item"></app-listing>
 </ion-content>

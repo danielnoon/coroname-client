@@ -5,16 +5,25 @@
         <ion-card-title>Hello!</ion-card-title>
         <ion-card-subtitle>Sign in to Coroname.</ion-card-subtitle>
       </ion-card-header>
-      <ion-item>
-        <ion-label position="floating">Username</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
       <ion-card-content>
-        <ion-button>Log In <ion-icon slot="end" name="arrow-forward-outline"></ion-icon></ion-button>
+        <div class="form-wrapper">
+          <form
+            method="post"
+            action="/login"
+            (ngSubmit)="submit()"
+            (keyup.enter)="submit()">
+            <ion-item>
+              <ion-label position="floating">Username</ion-label>
+              <ion-input name="username" [(ngModel)]="username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input name="password" [(ngModel)]="password" type="password"></ion-input>
+            </ion-item>
+            <div class="spacer"></div>
+            <ion-button (click)="submit()">Log In <ion-icon slot="end" name="arrow-forward-outline"></ion-icon></ion-button>
+          </form>
+        </div>
       </ion-card-content>
     </ion-card>
   </div>
