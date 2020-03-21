@@ -1,42 +1,70 @@
-.container {
-  display: flex;
-}
-
-.poster {
-  height: 300px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-}
-
-ion-card-content {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-ion-card-header {
-  display: flex;
-}
-
 .title {
   display: flex;
-  font-size: 2em;
+  font-size: 1.4em;
   color: var(--ion-text-color);
 }
 
-.center-text {
-  margin: auto;
+@media only screen and (min-width: 600px) {
+  .container {
+    display: flex;
+  }
+
+  .poster {
+    height: 300px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  ion-card-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ion-card-header {
+    display: flex;
+  }
+
+  .center-text {
+    margin: auto;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  ion-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .mobile {
+    display: none;
+  }
 }
 
-.spacer {
-  flex: 1 1 auto;
-}
+@media only screen and (max-width: 600px) {
+  ion-card-header {
+    .chips {
+      margin: 15px 0 0 0;
 
-ion-buttons {
-  display: flex;
-  flex-direction: row-reverse;
+      ion-chip {
+        margin: 0;
+      }
+    }
+  }
+
+  ion-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 20px;
+
+    ion-button {
+      flex: 1 1 auto;
+    }
+  }
 }

@@ -1,14 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <div slot="start" class="start">
-      <ion-title>
-        コロナメ
-      </ion-title>
-      <ion-searchbar animated [(ngModel)]="query" (ionChange)="search()" debounce="500"></ion-searchbar>
+      <ion-title> コ<span class="desktop">ロナメ</span> </ion-title>
+      <ion-searchbar
+        animated
+        [(ngModel)]="query"
+        (ionChange)="search()"
+        debounce="500"
+      ></ion-searchbar>
     </div>
-    <div slot="end" class="end">
+    <div slot="end" class="end desktop">
       <ion-chip>Votes: {{votesAvailable}}</ion-chip>
       <span class="username">{{username}}</span>
+    </div>
+    <div slot="end" class="end mobile">
+      <ion-chip>{{votesAvailable}}</ion-chip>
     </div>
   </ion-toolbar>
 </ion-header>
