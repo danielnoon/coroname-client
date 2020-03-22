@@ -22,6 +22,10 @@ export class UserEditorComponent implements OnInit {
     this.admin = this.user.admin;
   }
 
+  dismiss() {
+    this.modal.dismiss();
+  }
+
   async deleteUser() {
     const { code, data } = await this.api.request({
       route: 'admin/user/' + this.user.username,

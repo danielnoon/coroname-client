@@ -1,8 +1,15 @@
 .container {
-  max-width: 600px;
+  display: flex;
+}
+
+.center {
+  margin: auto;
+  max-width: 100%;
+  width: 400px;
 }
 
 .card-buttons {
   display: flex;
   flex-direction: row-reverse;
+  margin: 10px;
 }

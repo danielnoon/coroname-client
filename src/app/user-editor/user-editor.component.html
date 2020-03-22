@@ -3,8 +3,14 @@
     <ion-title>
       Edit User: {{ newUsername }}
     </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content padding>
   <ion-card>
     <ion-item>

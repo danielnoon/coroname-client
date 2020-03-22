@@ -10,11 +10,11 @@
 
 <ion-content>
   <div class="container">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Reset Anime Votes</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
+    <div class="center">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Reset Anime Votes</ion-card-title>
+        </ion-card-header>
         <ion-item>
           <ion-label>Are you sure?</ion-label>
           <ion-checkbox name="confirm" required [(ngModel)]="forms.reset.confirm"></ion-checkbox>
@@ -23,14 +23,12 @@
         <ion-buttons class="card-buttons">
           <ion-button (click)="resetVotes()" color="primary">Reset</ion-button>
         </ion-buttons>
-      </ion-card-content>
-    </ion-card>
+      </ion-card>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Add User</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Add User</ion-card-title>
+        </ion-card-header>
         <ion-item>
           <ion-label position="floating">Username</ion-label>
           <ion-input name="username" [(ngModel)]="forms.newUser.username"></ion-input>
@@ -43,19 +41,17 @@
         <ion-buttons class="card-buttons">
           <ion-button (click)="newAccount()" color="primary">Submit</ion-button>
         </ion-buttons>
-      </ion-card-content>
-    </ion-card>
+      </ion-card>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>User Management</ion-card-title>
-      </ion-card-header>
-      <ion-list>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>User Management</ion-card-title>
+        </ion-card-header>
         <ion-item *ngFor="let user of users" button (click)="editUser(user)">
           <span>{{ user.username }}</span>
           <ion-icon slot="end" name="pencil"></ion-icon>
         </ion-item>
-      </ion-list>
-    </ion-card>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
