@@ -1,23 +1,29 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <div slot="start" class="start">
-      <ion-title> コ<span class="desktop">ロナメ</span> </ion-title>
+      <ion-title class="logo" (click)="reset()">コ<span class="desktop">ロナメ</span></ion-title>
       <ion-searchbar
         animated
         [(ngModel)]="query"
         (ionChange)="search()"
       ></ion-searchbar>
     </div>
-    <div slot="end" class="end desktop">
+    <ion-buttons slot="end" class="end desktop">
       <ion-chip>Votes: {{votesAvailable}}</ion-chip>
       <span class="username">{{username}}</span>
-    </div>
+      <ion-button (click)="openUserPopover($event)">
+        <ion-icon name="caret-down-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <div slot="end" class="end mobile">
-      <ion-chip>{{votesAvailable}}</ion-chip>
+      <ion-chip (click)="openUserPopover($event)">{{votesAvailable}}</ion-chip>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <app-listing *ngFor="let item of anime" [anime]="item"></app-listing>
+  <div *ngIf="anime.length < 1" class="spinner">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>

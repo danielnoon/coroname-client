@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { ListingComponent } from '../listing/listing.component';
+import { UserPopoverComponent } from '../user-popover/user-popover.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ListingComponent } from '../listing/listing.component';
       }
     ])
   ],
-  declarations: [HomePage, ListingComponent]
+  declarations: [HomePage, ListingComponent, UserPopoverComponent],
+  entryComponents: [UserPopoverComponent]
 })
 export class HomePageModule {}

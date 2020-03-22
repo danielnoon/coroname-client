@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit User: {{ newUsername }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-card>
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input name="username" [(ngModel)]="newUsername"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Reset Password</ion-label>
+      <ion-checkbox name="resetPassword" [(ngModel)]="resetPassword"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Admin</ion-label>
+      <ion-checkbox name="admin" [(ngModel)]="admin"></ion-checkbox>
+    </ion-item>
+  </ion-card>
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button (click)="edit()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab slot="fixed" horizontal="start" vertical="bottom">
+    <ion-fab-button size="small" color="danger" (click)="deleteUser()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

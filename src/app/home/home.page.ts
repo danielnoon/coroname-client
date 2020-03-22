@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Anime } from 'src/models/anime';
 import { ApiService } from '../api-service.service';
 import { User } from '../user';
+import { PopoverController } from '@ionic/angular';
+import { UserPopoverComponent } from '../user-popover/user-popover.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,7 @@ export class HomePage implements OnInit {
   votesAvailable = User.votesAvailable;
   username = User.username;
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private pop: PopoverController) {}
 
   ngOnInit() {
     User.listen(() => {
@@ -46,5 +48,20 @@ export class HomePage implements OnInit {
     });
 
     this.anime = anime.data;
+  }
+
+  async openUserPopover(e: MouseEvent) {
+    const popover = await this.pop.create({
+      component: UserPopoverComponent,
+      event: e,
+      translucent: true
+    });
+
+    await popover.present();
+  }
+
+  reset() {
+    this.query = "";
+    this.getCurrentAnime();
   }
 }

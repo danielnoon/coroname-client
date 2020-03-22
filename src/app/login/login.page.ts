@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TokenResponse } from 'src/models/token-response';
 import { Router } from '@angular/router';
 import { ApiService } from '../api-service.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,8 @@ export class LoginPage implements OnInit {
       const token = res.data.token;
 
       localStorage.setItem('token', token);
+
+      User.load(this.api);
 
       this.router.navigateByUrl('/home');
     }

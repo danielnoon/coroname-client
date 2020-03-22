@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SearchPage } from './search.page';
+import { UserEditorComponent } from './user-editor.component';
 
-describe('SearchPage', () => {
-  let component: SearchPage;
-  let fixture: ComponentFixture<SearchPage>;
+describe('UserEditorComponent', () => {
+  let component: UserEditorComponent;
+  let fixture: ComponentFixture<UserEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchPage ],
+      declarations: [ UserEditorComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SearchPage);
+    fixture = TestBed.createComponent(UserEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

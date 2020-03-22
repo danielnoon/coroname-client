@@ -16,7 +16,7 @@ export class ApiService {
 
   async request<T>(options: {
     route: string;
-    method: 'get' | 'post' | 'put' | 'delete';
+    method: 'get' | 'post' | 'put' | 'delete' | 'patch';
     headers?: Headers;
     query?: string;
     body?: string | FormData;
@@ -32,7 +32,7 @@ export class ApiService {
         headers.append('auth-token', localStorage.getItem('token'));
       }
 
-      if (method === 'post') {
+      if (method !== 'get') {
         if (!headers.has('content-type')) {
           headers.append('content-type', 'application/json');
         }

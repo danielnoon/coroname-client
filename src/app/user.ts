@@ -11,6 +11,13 @@ export class User {
 
   private static listeners: Listener[] = [];
 
+  constructor(
+    public username: string,
+    public admin: boolean,
+    public votesAvailable: number,
+    public votedFor: number[]
+  ) {}
+
   static listen(listener: Listener) {
     this.listeners.push(listener);
   }
