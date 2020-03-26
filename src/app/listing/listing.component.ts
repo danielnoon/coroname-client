@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Anime } from 'src/models/anime';
 import { ApiService } from '../api-service.service';
 import { User } from '../user';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { VoterDetailsComponent } from '../voter-details/voter-details.component';
 
 @Component({
   selector: 'app-listing',
@@ -13,16 +15,19 @@ export class ListingComponent implements OnInit {
   @Input() anime: Anime;
   votedFor = false;
   admin = false;
+  voters: User[];
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private modal: ModalController, private popover: PopoverController) { }
 
   ngOnInit() {
-    this.votedFor = User.votedFor.includes(this.anime.kitsuId);
-    this.admin = User.admin;
+    this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
+    this.admin = User.me.admin;
 
     User.listen(() => {
-      this.admin = User.admin;
+      this.admin = User.me.admin;
     });
+
+    this.getVoters();
   }
 
   async vote() {
@@ -35,7 +40,7 @@ export class ListingComponent implements OnInit {
     if (result.code === 0) {
       this.anime.votes++;
       this.votedFor = true;
-      User.votesAvailable--;
+      User.me.votesAvailable--;
       User.update();
     }
   }
@@ -50,7 +55,7 @@ export class ListingComponent implements OnInit {
     if (result.code === 0) {
       this.anime.votes--;
       this.votedFor = false;
-      User.votesAvailable++;
+      User.me.votesAvailable++;
       User.update();
     }
   }
@@ -64,6 +69,45 @@ export class ListingComponent implements OnInit {
 
     if (result.code === 0) {
       location.reload();
+    }
+  }
+
+  async getVoters() {
+    const result = await this.api.request<User[]>({
+      route: `anime/${this.anime.kitsuId}/voters`,
+      method: 'get'
+    });
+
+    if (result.code === 0) {
+      this.voters = result.data;
+    }
+  }
+
+  getGravatar(user: User) {
+    return User.getGravatar(user);
+  }
+
+  async openVoterDetails(ev: MouseEvent) {
+    if (window.innerWidth < 600) {
+      const modal = await this.modal.create({
+        component: VoterDetailsComponent,
+        componentProps: {
+          users: this.voters
+        }
+      });
+
+      modal.present();
+    } else {
+      const popover = await this.popover.create({
+        component: VoterDetailsComponent,
+        componentProps: {
+          users: this.voters
+        },
+        event: ev,
+        showBackdrop: false
+      });
+
+      popover.present();
     }
   }
 }

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { ListingComponent } from '../listing/listing.component';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';
+import { VoterDetailsComponent } from '../voter-details/voter-details.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { UserPopoverComponent } from '../user-popover/user-popover.component';
       }
     ])
   ],
-  declarations: [HomePage, ListingComponent, UserPopoverComponent],
-  entryComponents: [UserPopoverComponent]
+  declarations: [HomePage, ListingComponent, UserPopoverComponent, VoterDetailsComponent],
+  entryComponents: [UserPopoverComponent, VoterDetailsComponent]
 })
 export class HomePageModule {}

@@ -4,6 +4,10 @@
   color: var(--ion-text-color);
 }
 
+.voter {
+  margin: -8px;
+}
+
 @media only screen and (min-width: 600px) {
   .container {
     display: flex;
@@ -52,8 +56,8 @@
     .chips {
       margin: 15px 0 0 0;
 
-      ion-chip {
-        margin: 0;
+      ion-chip:first-child {
+        margin-left: 0;
       }
     }
   }

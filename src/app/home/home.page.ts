@@ -13,15 +13,15 @@ import { UserPopoverComponent } from '../user-popover/user-popover.component';
 export class HomePage implements OnInit {
   anime: Anime[] = [];
   query: string;
-  votesAvailable = User.votesAvailable;
-  username = User.username;
+  votesAvailable = User.me.votesAvailable;
+  username = User.me.username;
 
   constructor(private api: ApiService, private pop: PopoverController) {}
 
   ngOnInit() {
     User.listen(() => {
-      this.votesAvailable = User.votesAvailable;
-      this.username = User.username;
+      this.votesAvailable = User.me.votesAvailable;
+      this.username = User.me.username;
     });
 
     this.getCurrentAnime();
