@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { Anime } from 'src/models/anime';
 import { ApiService } from '../api-service.service';
 import { User } from '../user';
@@ -13,11 +13,12 @@ import { VoterDetailsComponent } from '../voter-details/voter-details.component'
 export class ListingComponent implements OnInit {
 
   @Input() anime: Anime;
+
   votedFor = false;
   admin = false;
-  voters: User[];
+  voters: User[] = [];
 
-  constructor(private api: ApiService, private modal: ModalController, private popover: PopoverController) { }
+  constructor(private api: ApiService, private modal: ModalController, private popover: PopoverController, private zone: NgZone) { }
 
   ngOnInit() {
     if (User.me) {
@@ -26,8 +27,10 @@ export class ListingComponent implements OnInit {
     }
 
     User.listen(() => {
-      this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
-      this.admin = User.me.admin;
+        console.log(User.me);
+        this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
+        this.admin = User.me.admin;
+        this.getVoters();
     });
 
     this.getVoters();
@@ -44,6 +47,7 @@ export class ListingComponent implements OnInit {
       this.anime.votes++;
       this.votedFor = true;
       User.me.votesAvailable--;
+      User.me.votedFor.push(this.anime.kitsuId);
       User.update();
     }
   }
@@ -59,6 +63,7 @@ export class ListingComponent implements OnInit {
       this.anime.votes--;
       this.votedFor = false;
       User.me.votesAvailable++;
+      User.me.votedFor = User.me.votedFor.filter(id => id != this.anime.kitsuId);
       User.update();
     }
   }

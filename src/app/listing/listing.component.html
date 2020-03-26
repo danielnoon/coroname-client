@@ -11,7 +11,7 @@
           <ion-chip *ngIf="anime.continuingSeries" color="secondary">Continuing Series</ion-chip>
           <ion-chip *ngIf="anime.nsfw" color="danger">NSFW</ion-chip>
           <ion-chip *ngIf="!anime.continuingSeries">Votes: {{anime.votes}}</ion-chip>
-          <ion-chip class="voters" *ngIf="!anime.continuingSeries" (click)="openVoterDetails($event)">
+          <ion-chip class="voters" *ngIf="!anime.continuingSeries && voters.length > 0" (click)="openVoterDetails($event)">
             <ion-avatar *ngFor="let voter of voters" class="voter">
               <img [src]="getGravatar(voter)">
             </ion-avatar>

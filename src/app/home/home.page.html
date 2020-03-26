@@ -24,6 +24,10 @@
 <ion-content>
   <app-listing *ngFor="let item of anime" [anime]="item"></app-listing>
   <div *ngIf="anime.length < 1" class="spinner">
-    <ion-spinner></ion-spinner>
+    <ion-spinner *ngIf="!hasLoaded"></ion-spinner>
+    <div class="empty-message" *ngIf="hasLoaded">
+      <h1>Nothing's here...</h1>
+      <p>Go vote on something! Search for any anime using the search bar above.</p>
+    </div>
   </div>
 </ion-content>

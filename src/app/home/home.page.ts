@@ -15,6 +15,8 @@ export class HomePage implements OnInit {
   query: string;
   votesAvailable = 0;
   username = "";
+  hasLoaded = false;
+  searching = false;
 
   constructor(private api: ApiService, private pop: PopoverController) {}
 
@@ -23,7 +25,7 @@ export class HomePage implements OnInit {
       this.votesAvailable = User.me.votesAvailable;
       this.username = User.me.username;
     }
-    
+
     User.listen(() => {
       this.votesAvailable = User.me.votesAvailable;
       this.username = User.me.username;
@@ -42,6 +44,8 @@ export class HomePage implements OnInit {
         query: 'q=' + this.query
       });
 
+      this.searching = true;
+
       this.anime = anime.data;
     }
   }
@@ -52,7 +56,11 @@ export class HomePage implements OnInit {
       method: 'get'
     });
 
+    this.searching = false;
+
     this.anime = anime.data;
+
+    this.hasLoaded = true;
   }
 
   async openUserPopover(e: MouseEvent) {
