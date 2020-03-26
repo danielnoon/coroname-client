@@ -27,7 +27,6 @@ export class ListingComponent implements OnInit {
     }
 
     User.listen(() => {
-        console.log(User.me);
         this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
         this.admin = User.me.admin;
         this.getVoters();

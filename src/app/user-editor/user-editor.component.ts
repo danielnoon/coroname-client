@@ -14,12 +14,14 @@ export class UserEditorComponent implements OnInit {
   newUsername: string;
   resetPassword = false;
   admin: boolean;
+  votes: number;
 
   constructor(private api: ApiService, private modal: ModalController) { }
 
   ngOnInit() {
     this.newUsername = this.user.username;
     this.admin = this.user.admin;
+    this.votes = this.user.votesAvailable;
   }
 
   dismiss() {
@@ -46,13 +48,15 @@ export class UserEditorComponent implements OnInit {
       body: JSON.stringify({
         username: this.newUsername,
         resetPassword: this.resetPassword,
-        admin: this.admin
+        admin: this.admin,
+        votes: this.votes
       })
     });
 
     if (code === 0) {
       this.user.username = this.newUsername;
       this.user.admin = this.admin;
+      this.user.votesAvailable = this.votes;
 
       this.modal.dismiss({
         deleted: false
