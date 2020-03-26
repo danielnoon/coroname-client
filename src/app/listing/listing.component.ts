@@ -20,10 +20,13 @@ export class ListingComponent implements OnInit {
   constructor(private api: ApiService, private modal: ModalController, private popover: PopoverController) { }
 
   ngOnInit() {
-    this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
-    this.admin = User.me.admin;
+    if (User.me) {
+      this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
+      this.admin = User.me.admin;
+    }
 
     User.listen(() => {
+      this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
       this.admin = User.me.admin;
     });
 

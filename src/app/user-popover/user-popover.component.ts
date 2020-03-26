@@ -14,7 +14,13 @@ export class UserPopoverComponent implements OnInit {
   constructor(private pop: PopoverController, private router: Router) { }
 
   ngOnInit() {
-    this.admin = User.me.admin;
+    if (User.me) {
+      this.admin = User.me.admin;
+    }
+
+    User.listen(() => {
+      this.admin = User.me.admin;
+    });
   }
 
   dismiss() {
