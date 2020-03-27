@@ -23,18 +23,22 @@ export class User {
 
   static async init(api: ApiService) {
     if (localStorage.getItem('token')) {
-      const { code, data } = await api.request<User>({
-        route: 'users/me',
-        method: 'get'
-      });
+      try {
+        const { code, data } = await api.request<User>({
+          route: 'users/me',
+          method: 'get'
+        });
 
-      if (code === 0) {
-        this.me = data;
+        if (code === 0) {
+          this.me = data;
 
-        this.update();
+          this.update();
 
-        return true;
-      } else {
+          return true;
+        } else {
+          return false;
+        }
+      } catch {
         return false;
       }
     }

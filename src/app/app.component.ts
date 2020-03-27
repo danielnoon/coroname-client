@@ -29,10 +29,10 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
-    const success = User.init(this.api);
+    // const success = User.init(this.api);
 
-    if (!success) {
-      this.router.navigateByUrl('/login');
-    }
+    // if (!success) {
+    //   this.router.navigateByUrl('/login');
+    // }
   }
 }

@@ -12,6 +12,7 @@ export class LoadingPage implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
+      
       this.router.navigateByUrl('/home');
     } else {
       this.router.navigateByUrl('/login');

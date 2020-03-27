@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user</ion-title>
+    <ion-title>Your Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home">Home</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="container">
+    <a href="https://gravatar.com" target="_blank">
+      <ion-avatar class="avatar">
+        <img *ngIf="user" [src]="getGravatar()">
+        <ion-spinner *ngIf="!user"></ion-spinner>
+      </ion-avatar>
+    </a>
+    <div class="center" *ngIf="user">
+      <ion-card>
+        <ion-item>
+          <ion-label position="floating">Username</ion-label>
+          <ion-input [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">New Password</ion-label>
+          <ion-input [(ngModel)]="password" type="password"></ion-input>
+        </ion-item>
+      </ion-card>
+    </div>
+  </div>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="update()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
