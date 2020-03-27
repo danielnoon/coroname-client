@@ -21,25 +21,22 @@ export class User {
     this.listeners.push(listener);
   }
 
-  static async load(api: ApiService) {
+  static async init(api: ApiService) {
     if (localStorage.getItem('token')) {
-      const { data } = await api.request<{ token: string }>({
-        route: 'auth/new-token',
+      const { code, data } = await api.request<User>({
+        route: 'users/me',
         method: 'get'
       });
 
-      const token = data.token;
-      const user = jwtDecode(token);
+      if (code === 0) {
+        this.me = data;
 
-      const username = user['sub'];
-      const admin = user['admin'];
-      const votesAvailable = user['votesAvailable'];
-      const votedFor = user['votedFor'];
-      const email = user['votedFor'];
+        this.update();
 
-      this.me = new User(username, admin, votesAvailable, votedFor, email);
-
-      this.update();
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -48,6 +45,6 @@ export class User {
   }
 
   static getGravatar(user: User) {
-    return `https://www.gravatar.com/avatar/${ Md5.hashStr(user.email || user.username) }?d=identicon`
+    return `https://www.gravatar.com/avatar/${ Md5.hashStr(user.email || user.username) }?d=identicon&r=r`
   }
 }

@@ -6,11 +6,13 @@ import { User } from '../user';
   templateUrl: './voter-details.component.html',
   styleUrls: ['./voter-details.component.scss'],
 })
-export class VoterDetailsComponent implements OnInit {
+export class VoterDetailsComponent {
   @Input() users: User[];
 
   constructor() { }
 
-  ngOnInit() {}
+  getIcon(user: User) {
+    return User.getGravatar(user);
+  }
 
 }

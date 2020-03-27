@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
 
       localStorage.setItem('token', token);
 
-      User.load(this.api);
+      User.init(this.api);
 
       this.router.navigateByUrl('/home');
     }

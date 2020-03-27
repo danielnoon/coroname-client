@@ -10,10 +10,12 @@
     </div>
     <ion-buttons slot="end" class="end desktop">
       <ion-chip>Votes: {{votesAvailable}}</ion-chip>
-      <span class="username">{{username}}</span>
-      <ion-button (click)="openUserPopover($event)">
-        <ion-icon name="caret-down-outline" slot="icon-only"></ion-icon>
-      </ion-button>
+      <ion-chip (click)="openUserPopover($event)">
+      {{username}}
+      <ion-avatar>
+        <img [src]="userIcon">
+      </ion-avatar>
+      </ion-chip>
     </ion-buttons>
     <div slot="end" class="end mobile">
       <ion-chip (click)="openUserPopover($event)">{{votesAvailable}}</ion-chip>
@@ -22,7 +24,7 @@
 </ion-header>
 
 <ion-content>
-  <app-listing *ngFor="let item of anime" [anime]="item"></app-listing>
+  <app-listing *ngFor="let item of anime" [anime]="item" (update)="updateListing()"></app-listing>
   <div *ngIf="anime.length < 1" class="spinner">
     <ion-spinner *ngIf="!hasLoaded"></ion-spinner>
     <div class="empty-message" *ngIf="hasLoaded">

@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   username = "";
   hasLoaded = false;
   searching = false;
+  userIcon = "";
 
   constructor(private api: ApiService, private pop: PopoverController) {}
 
@@ -24,11 +25,13 @@ export class HomePage implements OnInit {
     if (User.me) {
       this.votesAvailable = User.me.votesAvailable;
       this.username = User.me.username;
+      this.userIcon = User.getGravatar(User.me);
     }
 
     User.listen(() => {
       this.votesAvailable = User.me.votesAvailable;
       this.username = User.me.username;
+      this.userIcon = User.getGravatar(User.me);
     });
 
     this.getCurrentAnime();
@@ -61,6 +64,14 @@ export class HomePage implements OnInit {
     this.anime = anime.data;
 
     this.hasLoaded = true;
+  }
+
+  updateListing() {
+    if (!this.searching) {
+      this.getCurrentAnime();
+    } else {
+      this.search();
+    }
   }
 
   async openUserPopover(e: MouseEvent) {

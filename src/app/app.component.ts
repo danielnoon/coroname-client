@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { User } from './user';
 import { ApiService } from './api-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private api: ApiService
+    private api: ApiService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -27,6 +29,10 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
-    User.load(this.api);
+    const success = User.init(this.api);
+
+    if (!success) {
+      this.router.navigateByUrl('/login');
+    }
   }
 }

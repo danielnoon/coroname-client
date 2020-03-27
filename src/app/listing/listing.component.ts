@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, Input, NgZone, Output, EventEmitter } from '@angular/core';
 import { Anime } from 'src/models/anime';
 import { ApiService } from '../api-service.service';
 import { User } from '../user';
@@ -13,12 +13,13 @@ import { VoterDetailsComponent } from '../voter-details/voter-details.component'
 export class ListingComponent implements OnInit {
 
   @Input() anime: Anime;
+  @Output() update = new EventEmitter();
 
   votedFor = false;
   admin = false;
   voters: User[] = [];
 
-  constructor(private api: ApiService, private modal: ModalController, private popover: PopoverController, private zone: NgZone) { }
+  constructor(private api: ApiService, private popover: PopoverController, private zone: NgZone) { }
 
   ngOnInit() {
     if (User.me) {
@@ -75,7 +76,7 @@ export class ListingComponent implements OnInit {
     });
 
     if (result.code === 0) {
-      location.reload();
+      this.update.emit();
     }
   }
 
@@ -95,26 +96,15 @@ export class ListingComponent implements OnInit {
   }
 
   async openVoterDetails(ev: MouseEvent) {
-    if (window.innerWidth < 600) {
-      const modal = await this.modal.create({
-        component: VoterDetailsComponent,
-        componentProps: {
-          users: this.voters
-        }
-      });
+    const popover = await this.popover.create({
+      component: VoterDetailsComponent,
+      componentProps: {
+        users: this.voters
+      },
+      event: ev,
+      showBackdrop: false
+    });
 
-      modal.present();
-    } else {
-      const popover = await this.popover.create({
-        component: VoterDetailsComponent,
-        componentProps: {
-          users: this.voters
-        },
-        event: ev,
-        showBackdrop: false
-      });
-
-      popover.present();
-    }
+    popover.present();
   }
 }
