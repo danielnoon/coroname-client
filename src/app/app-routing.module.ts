@@ -15,8 +15,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./loading/loading.module').then( m => m.LoadingPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./loading/loading.module').then( m => m.LoadingPageModule)
   },
   {
     path: 'admin',
@@ -27,6 +26,10 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () => import('./user/user.module').then( m => m.UserPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   }
 ];
 
