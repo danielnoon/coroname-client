@@ -27,5 +27,4 @@ export class LoadingPage implements OnInit {
       this.router.navigateByUrl('/login');
     }
   }
-
 }
