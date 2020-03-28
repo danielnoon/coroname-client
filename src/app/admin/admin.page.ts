@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api-service.service';
+import { ApiService } from '../api.service';
 import { ToastController, ModalController } from '@ionic/angular';
 import { User } from '../user';
 import { UserEditorComponent } from '../user-editor/user-editor.component';

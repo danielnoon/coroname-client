@@ -1,5 +1,5 @@
 import * as jwtDecode from 'jwt-decode';
-import { ApiService } from './api-service.service';
+import { ApiService } from './api.service';
 import { Md5 } from 'ts-md5/dist/md5';
 
 type Listener = () => void;

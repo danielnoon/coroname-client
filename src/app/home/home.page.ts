@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Anime } from 'src/models/anime';
-import { ApiService } from '../api-service.service';
+import { ApiService } from '../api.service';
 import { User } from '../user';
 import { PopoverController } from '@ionic/angular';
 import { UserPopoverComponent } from '../user-popover/user-popover.component';

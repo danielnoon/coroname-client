@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { User } from './user';
-import { ApiService } from './api-service.service';
+import { ApiService } from './api.service';
 import { Router } from '@angular/router';
 
 @Component({

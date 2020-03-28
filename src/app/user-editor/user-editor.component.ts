@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../user';
-import { ApiService } from '../api-service.service';
+import { ApiService } from '../api.service';
 import { ModalController } from '@ionic/angular';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, NgZone, Output, EventEmitter } from '@angular/core';
 import { Anime } from 'src/models/anime';
-import { ApiService } from '../api-service.service';
+import { ApiService } from '../api.service';
 import { User } from '../user';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { VoterDetailsComponent } from '../voter-details/voter-details.component';
