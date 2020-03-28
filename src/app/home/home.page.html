@@ -10,8 +10,8 @@
       ></ion-searchbar>
     </div>
     <ion-buttons slot="end" class="end desktop">
-      <ion-chip>Votes: {{votesAvailable}}</ion-chip>
-      <ion-chip (click)="openUserPopover($event)">
+      <ion-chip outline color="dark">Votes: {{votesAvailable}}</ion-chip>
+      <ion-chip outline color="dark" (click)="openUserPopover($event)">
       {{username}}
       <ion-avatar>
         <img [src]="userIcon">
