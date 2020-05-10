@@ -1,31 +1,53 @@
 <ion-card>
   <div class="container">
-    <img class="poster" [src]="anime.poster">
+    <img class="poster" [src]="anime.poster" />
     <div class="content">
       <ion-card-header>
         <div class="title">
-          <span class="center-text">{{anime.title}}</span>
+          <span class="center-text">{{ anime.title }}</span>
         </div>
         <div class="spacer"></div>
         <div class="chips">
-          <ion-chip *ngIf="anime.continuingSeries" color="secondary">Continuing Series</ion-chip>
+          <ion-chip *ngIf="anime.continuingSeries" color="tertiary">
+            Continuing Series
+          </ion-chip>
           <ion-chip *ngIf="anime.nsfw" color="danger">NSFW</ion-chip>
-          <ion-chip *ngIf="!anime.continuingSeries">Votes: {{anime.votes}}</ion-chip>
-          <ion-chip class="voters" *ngIf="!anime.continuingSeries && voters.length > 0" (click)="openVoterDetails($event)">
+          <ion-chip *ngIf="!anime.continuingSeries">
+            Votes: {{ anime.votes }}
+          </ion-chip>
+          <ion-chip
+            class="voters"
+            *ngIf="!anime.continuingSeries && voters.length > 0"
+            (click)="openVoterDetails($event)"
+          >
             <ion-avatar *ngFor="let voter of voters" class="voter">
-              <img [src]="getGravatar(voter)">
+              <img [src]="getGravatar(voter)" />
             </ion-avatar>
           </ion-chip>
         </div>
       </ion-card-header>
       <ion-card-content>
         <p class="synopsis">
-          {{anime.synopsis}}
+          {{ anime.synopsis }}
         </p>
         <div class="spacer"></div>
         <ion-buttons>
-          <ion-button *ngIf="!anime.continuingSeries" color="primary" fill="solid" size="large" (click)="votedFor ? rescind() : vote()">{{votedFor ? 'Rescind' : 'Vote'}}</ion-button>
-          <ion-button *ngIf="admin && !anime.continuingSeries" color="tertiary" fill="solid" size="large" (click)="setAsCS()">Set as Continuing Series</ion-button>
+          <ion-button
+            *ngIf="!anime.continuingSeries"
+            color="primary"
+            fill="solid"
+            size="large"
+            (click)="votedFor ? rescind() : vote()"
+            >{{ votedFor ? "Rescind" : "Vote" }}</ion-button
+          >
+          <ion-button
+            *ngIf="admin && !anime.continuingSeries"
+            color="secondary"
+            fill="solid"
+            size="large"
+            (click)="setAsCS()"
+            >Set as Continuing Series</ion-button
+          >
         </ion-buttons>
       </ion-card-content>
     </div>
