@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Anime } from 'src/models/anime';
-import { ApiService } from '../api.service';
-import { User } from '../user';
-import { PopoverController } from '@ionic/angular';
-import { UserPopoverComponent } from '../user-popover/user-popover.component';
+import { Component, OnInit } from "@angular/core";
+import { Anime } from "src/models/anime";
+import { ApiService } from "../api.service";
+import { User } from "../user";
+import { PopoverController } from "@ionic/angular";
+import { UserPopoverComponent } from "../user-popover/user-popover.component";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: "app-home",
+  templateUrl: "home.page.html",
+  styleUrls: ["home.page.scss"],
 })
 export class HomePage implements OnInit {
   anime: Anime[] = [];
@@ -42,9 +42,9 @@ export class HomePage implements OnInit {
       this.getCurrentAnime();
     } else {
       const anime = await this.api.request<Anime[]>({
-        route: 'anime/search',
-        method: 'get',
-        query: 'q=' + this.query
+        route: "anime/search",
+        method: "get",
+        query: "q=" + this.query,
       });
 
       this.searching = true;
@@ -55,8 +55,8 @@ export class HomePage implements OnInit {
 
   async getCurrentAnime() {
     const anime = await this.api.request<Anime[]>({
-      route: 'anime/current',
-      method: 'get'
+      route: "anime/current",
+      method: "get",
     });
 
     this.searching = false;
@@ -78,7 +78,7 @@ export class HomePage implements OnInit {
     const popover = await this.pop.create({
       component: UserPopoverComponent,
       event: e,
-      translucent: true
+      translucent: true,
     });
 
     await popover.present();
@@ -87,5 +87,9 @@ export class HomePage implements OnInit {
   reset() {
     this.query = "";
     this.getCurrentAnime();
+  }
+
+  trackByAnime(index: number, item: Anime) {
+    return item.kitsuId;
   }
 }
