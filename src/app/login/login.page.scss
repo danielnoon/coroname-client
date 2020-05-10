@@ -1,18 +1,17 @@
-.main-card {
-  width: 600px;
-  max-width: 100%;
-  margin: auto;
+form {
+  height: 100%;
 }
 
-.centerer {
+.wrapper {
   display: flex;
   height: 100%;
 }
 
-@media only screen and (max-width: 600px) {
-  .main-card {
-    width: 600px;
-    max-width: 100%;
-    margin: 20px;
-  }
+.column {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: min(100%, 600px);
+  justify-content: center;
 }
