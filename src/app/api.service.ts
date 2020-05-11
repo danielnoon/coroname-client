@@ -77,6 +77,8 @@ export class ApiService {
           message: "Hold on! The server is warming up...",
         });
 
+        this.toastPopped = true;
+
         this.toast.present();
       }, 2500);
     }
