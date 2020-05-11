@@ -1,6 +1,11 @@
 <ion-card>
   <div class="container">
-    <img class="poster" [src]="anime.poster" />
+    <div
+      class="poster-wrapper"
+      [style.backgroundImage]="'url(' + anime.poster + ')'"
+    >
+      <img class="poster" [src]="anime.poster" />
+    </div>
     <div class="content">
       <ion-card-header>
         <div class="title">

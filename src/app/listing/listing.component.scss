@@ -8,19 +8,37 @@
   margin: -8px;
 }
 
+ion-buttons {
+  margin-top: 20px;
+}
+
 @media only screen and (min-width: 600px) {
   .container {
     display: flex;
+    align-items: stretch;
+    min-height: 300px;
   }
 
-  .poster {
-    height: 300px;
+  .poster-wrapper {
+    flex: 0 1 auto;
+    min-height: 100%;
+    display: flex;
+    position: relative;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-position: center;
+    width: 212px;
+    // background-blend-mode: color-burn;
   }
 
   .content {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
+    flex: 1 1;
+  }
+
+  .poster {
+    display: none;
   }
 
   ion-card-content {
@@ -62,10 +80,13 @@
     }
   }
 
+  .poster {
+    display: block;
+  }
+
   ion-buttons {
     display: flex;
     flex-direction: row-reverse;
-    margin-top: 20px;
 
     ion-button {
       flex: 1 1 auto;
