@@ -53,6 +53,15 @@
             (click)="setAsCS()"
             >Set as Continuing Series</ion-button
           >
+          <ion-button
+            *ngIf="admin"
+            color="danger"
+            fill="solid"
+            size="large"
+            (click)="remove()"
+          >
+            Remove
+          </ion-button>
         </ion-buttons>
       </ion-card-content>
     </div>
