@@ -81,6 +81,17 @@ export class ListingComponent implements OnInit {
     }
   }
 
+  async remove() {
+    const result = await this.api.request({
+      route: "anime/show/" + this.anime.kitsuId,
+      method: "delete",
+    });
+
+    if (result.code === 0) {
+      this.update.emit();
+    }
+  }
+
   async getVoters() {
     const result = await this.api.request<User[]>({
       route: `anime/${this.anime.kitsuId}/voters`,

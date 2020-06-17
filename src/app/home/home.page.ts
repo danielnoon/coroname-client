@@ -87,6 +87,7 @@ export class HomePage implements OnInit {
   reset() {
     this.query = "";
     this.getCurrentAnime();
+    User.init(this.api);
   }
 
   trackByAnime(index: number, item: Anime) {

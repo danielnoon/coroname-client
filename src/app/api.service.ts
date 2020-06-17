@@ -96,12 +96,15 @@ export class ApiService {
   }
 
   async error(err: Error) {
+    this.clearHerokuTimeout();
+
     const toast = await this.toastController.create({
       color: "danger",
       message: err.message,
       position: "bottom",
       duration: 4000,
     });
+
     toast.present();
   }
 }

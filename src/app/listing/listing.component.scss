@@ -12,6 +12,10 @@ ion-buttons {
   margin-top: 20px;
 }
 
+.synopsis {
+  white-space: pre-line;
+}
+
 @media only screen and (min-width: 600px) {
   .container {
     display: flex;
