@@ -1,6 +1,5 @@
-import * as jwtDecode from 'jwt-decode';
-import { ApiService } from './api.service';
-import { Md5 } from 'ts-md5/dist/md5';
+import { ApiService } from "./api.service";
+import { Md5 } from "ts-md5/dist/md5";
 
 type Listener = () => void;
 
@@ -22,11 +21,11 @@ export class User {
   }
 
   static async init(api: ApiService) {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       try {
         const { code, data } = await api.request<User>({
-          route: 'users/me',
-          method: 'get'
+          route: "users/me",
+          method: "get",
         });
 
         if (code === 0) {
@@ -45,10 +44,12 @@ export class User {
   }
 
   static update() {
-    this.listeners.forEach(l => l());
+    this.listeners.forEach((l) => l());
   }
 
   static getGravatar(user: User) {
-    return `https://www.gravatar.com/avatar/${ Md5.hashStr(user.email || user.username) }?d=identicon&r=r`
+    return `https://www.gravatar.com/avatar/${Md5.hashStr(
+      user.email || user.username
+    )}?d=identicon&r=r`;
   }
 }
