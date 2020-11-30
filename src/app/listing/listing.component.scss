@@ -91,9 +91,11 @@ ion-buttons {
   ion-buttons {
     display: flex;
     flex-direction: row-reverse;
+    flex-wrap: wrap;
 
     ion-button {
       flex: 1 1 auto;
+      margin: 4px;
     }
   }
 }

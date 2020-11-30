@@ -4,6 +4,22 @@ import { environment } from "src/environments/environment";
 import { Response } from "src/models/response";
 import { Error } from "src/models/error";
 
+export enum HttpMethod {
+  GET,
+  POST,
+  PUT,
+  PATCH,
+  DELETE,
+}
+
+const methodMap = new Map<HttpMethod, string>([
+  [HttpMethod.GET, "GET"],
+  [HttpMethod.POST, "POST"],
+  [HttpMethod.PUT, "PUT"],
+  [HttpMethod.PATCH, "PATCH"],
+  [HttpMethod.DELETE, "DELETE"],
+]);
+
 @Injectable({
   providedIn: "root",
 })
@@ -15,12 +31,12 @@ export class ApiService {
   constructor(private toastController: ToastController) {}
 
   private constructEndpoint(route: string, query?: string) {
-    return `${environment.api}/${route}${query ? "?" + query : ""}`;
+    return `${environment.api}/v2/${route}${query ? "?" + query : ""}`;
   }
 
   async request<T>(options: {
     route: string;
-    method: "get" | "post" | "put" | "delete" | "patch";
+    method: HttpMethod;
     headers?: Headers;
     query?: string;
     body?: string | FormData;
@@ -39,7 +55,7 @@ export class ApiService {
         headers.append("auth-token", localStorage.getItem("token"));
       }
 
-      if (method !== "get") {
+      if (method !== HttpMethod.GET) {
         if (!headers.has("content-type")) {
           headers.append("content-type", "application/json");
         }
@@ -50,7 +66,7 @@ export class ApiService {
       }
 
       const response = await fetch(this.constructEndpoint(route, query), {
-        method,
+        method: methodMap.get(method),
         headers,
         body,
       });

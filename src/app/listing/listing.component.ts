@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Anime } from "src/models/anime";
-import { ApiService } from "../api.service";
+import { ApiService, HttpMethod } from "../api.service";
 import { User } from "../user";
 import { PopoverController } from "@ionic/angular";
 import { VoterDetailsComponent } from "../voter-details/voter-details.component";
+import { EpisodeSelectPopoverComponent } from "../episode-select-popover/episode-select-popover.component";
 
 @Component({
   selector: "app-listing",
@@ -16,6 +17,7 @@ export class ListingComponent implements OnInit {
 
   votedFor = false;
   admin = false;
+  permissions: string[] = [];
   voters: User[] = [];
 
   constructor(private api: ApiService, private popover: PopoverController) {}
@@ -24,11 +26,13 @@ export class ListingComponent implements OnInit {
     if (User.me) {
       this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
       this.admin = User.me.admin;
+      this.permissions = User.me.permissions;
     }
 
     User.listen(() => {
       this.votedFor = User.me.votedFor.includes(this.anime.kitsuId);
       this.admin = User.me.admin;
+      this.permissions = User.me.permissions;
       this.getVoters();
     });
 
@@ -37,9 +41,8 @@ export class ListingComponent implements OnInit {
 
   async vote() {
     const result = await this.api.request({
-      route: "anime/vote",
-      method: "post",
-      body: JSON.stringify({ id: this.anime.kitsuId }),
+      route: `anime/votes/${this.anime.kitsuId}`,
+      method: HttpMethod.POST,
     });
 
     if (result.code === 0) {
@@ -53,9 +56,8 @@ export class ListingComponent implements OnInit {
 
   async rescind() {
     const result = await this.api.request({
-      route: "anime/rescind",
-      method: "post",
-      body: JSON.stringify({ id: this.anime.kitsuId }),
+      route: `anime/votes/${this.anime.kitsuId}`,
+      method: HttpMethod.DELETE,
     });
 
     if (result.code === 0) {
@@ -72,7 +74,7 @@ export class ListingComponent implements OnInit {
   async setAsCS() {
     const result = await this.api.request({
       route: "anime/continuing-series",
-      method: "post",
+      method: HttpMethod.PUT,
       body: JSON.stringify({ id: this.anime.kitsuId }),
     });
 
@@ -83,8 +85,8 @@ export class ListingComponent implements OnInit {
 
   async remove() {
     const result = await this.api.request({
-      route: "anime/show/" + this.anime.kitsuId,
-      method: "delete",
+      route: "anime/current/" + this.anime.kitsuId,
+      method: HttpMethod.DELETE,
     });
 
     if (result.code === 0) {
@@ -94,8 +96,8 @@ export class ListingComponent implements OnInit {
 
   async getVoters() {
     const result = await this.api.request<User[]>({
-      route: `anime/${this.anime.kitsuId}/voters`,
-      method: "get",
+      route: `anime/votes/${this.anime.kitsuId}`,
+      method: HttpMethod.GET,
     });
 
     if (result.code === 0) {
@@ -118,5 +120,48 @@ export class ListingComponent implements OnInit {
     });
 
     popover.present();
+  }
+
+  async incrementEpisode(ev: MouseEvent) {
+    ev.stopPropagation();
+
+    if (this.anime.episode === this.anime.episodes) return;
+
+    this.setEpisode(this.anime.episode + 1);
+  }
+
+  async openEpisodeSelect(ev: MouseEvent) {
+    if (!(this.permissions.includes("change episode") || this.admin)) return;
+
+    const pop = await this.popover.create({
+      component: EpisodeSelectPopoverComponent,
+      event: ev,
+      componentProps: {
+        episode: this.anime.episode,
+        update: (episode: number) => {
+          this.anime.episode = episode;
+        },
+      },
+    });
+
+    await pop.present();
+
+    await pop.onDidDismiss();
+
+    this.setEpisode(this.anime.episode);
+  }
+
+  async setEpisode(ep: number) {
+    const result = await this.api.request({
+      route: `anime/shows/${this.anime.kitsuId}`,
+      method: HttpMethod.PATCH,
+      body: JSON.stringify({
+        episode: ep,
+      }),
+    });
+
+    if (result.code === 0) {
+      this.anime.episode = ep;
+    }
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Anime } from "src/models/anime";
-import { ApiService } from "../api.service";
+import { ApiService, HttpMethod } from "../api.service";
 import { User } from "../user";
-import { PopoverController } from "@ionic/angular";
+import { IonRefresher, PopoverController } from "@ionic/angular";
 import { UserPopoverComponent } from "../user-popover/user-popover.component";
 
 @Component({
@@ -38,25 +38,29 @@ export class HomePage implements OnInit {
   }
 
   async search() {
+    this.hasLoaded = false;
+
     if (!this.query) {
-      this.getCurrentAnime();
+      await this.getCurrentAnime();
     } else {
       const anime = await this.api.request<Anime[]>({
         route: "anime/search",
-        method: "get",
+        method: HttpMethod.GET,
         query: "q=" + this.query,
       });
 
       this.searching = true;
 
       this.anime = anime.data;
+
+      this.hasLoaded = true;
     }
   }
 
   async getCurrentAnime() {
     const anime = await this.api.request<Anime[]>({
       route: "anime/current",
-      method: "get",
+      method: HttpMethod.GET,
     });
 
     this.searching = false;
@@ -84,13 +88,24 @@ export class HomePage implements OnInit {
     await popover.present();
   }
 
-  reset() {
+  async reset() {
+    this.hasLoaded = false;
     this.query = "";
-    this.getCurrentAnime();
-    User.init(this.api);
+    await this.getCurrentAnime();
+    await User.init(this.api);
   }
 
   trackByAnime(index: number, item: Anime) {
     return item.kitsuId;
+  }
+
+  async doRefresh(ev: IonRefresher) {
+    if (this.searching) {
+      await this.search();
+    } else {
+      await this.reset();
+    }
+
+    ev.complete();
   }
 }

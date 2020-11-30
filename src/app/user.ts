@@ -1,5 +1,6 @@
-import { ApiService } from "./api.service";
+import { ApiService, HttpMethod } from "./api.service";
 import { Md5 } from "ts-md5/dist/md5";
+import * as decode from "jwt-decode";
 
 type Listener = () => void;
 
@@ -13,6 +14,7 @@ export class User {
     public admin: boolean,
     public votesAvailable: number,
     public votedFor: number[],
+    public permissions: string[],
     public email?: string
   ) {}
 
@@ -23,9 +25,12 @@ export class User {
   static async init(api: ApiService) {
     if (localStorage.getItem("token")) {
       try {
+        const token = decode(localStorage.getItem("token"));
+        const username = token["username"];
+
         const { code, data } = await api.request<User>({
-          route: "users/me",
-          method: "get",
+          route: `users/${username}`,
+          method: HttpMethod.GET,
         });
 
         if (code === 0) {

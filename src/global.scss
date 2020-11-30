@@ -29,3 +29,27 @@
   transition: 100ms linear;
   transition-property: background-color, background;
 }
+
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+@each $size, $size-value in $screen-breakpoints {
+  .hide-lt-#{$size} {
+    @media (max-width: $size-value) {
+      display: none;
+    }
+  }
+}
+
+@each $size, $size-value in $screen-breakpoints {
+  .hide-gt-#{$size} {
+    @media (min-width: $size-value) {
+      display: none;
+    }
+  }
+}

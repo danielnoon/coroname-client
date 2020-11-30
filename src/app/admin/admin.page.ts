@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ApiService } from "../api.service";
+import { ApiService, HttpMethod } from "../api.service";
 import { ToastController, ModalController } from "@ionic/angular";
 import { User } from "../user";
 import { UserEditorComponent } from "../user-editor/user-editor.component";
@@ -15,6 +15,7 @@ export class AdminPage implements OnInit {
     newUser: {
       username: "",
       admin: false,
+      permissions: ["vote", "view anime"],
     },
     reset: {
       confirm: false,
@@ -29,8 +30,8 @@ export class AdminPage implements OnInit {
   };
 
   users: User[];
-
   anime: Anime[];
+  permissions: string[];
 
   constructor(
     private api: ApiService,
@@ -41,12 +42,13 @@ export class AdminPage implements OnInit {
   ngOnInit() {
     this.getUsers();
     this.getAnime();
+    this.getPermissions();
   }
 
   async getUsers() {
     const { code, data } = await this.api.request<User[]>({
-      route: "admin/users",
-      method: "get",
+      route: "users",
+      method: HttpMethod.GET,
     });
 
     if (code == 0) {
@@ -56,12 +58,23 @@ export class AdminPage implements OnInit {
 
   async getAnime() {
     const { code, data } = await this.api.request<Anime[]>({
-      route: "anime/all",
-      method: "get",
+      route: "anime/shows",
+      method: HttpMethod.GET,
     });
 
     if (code === 0) {
       this.anime = data;
+    }
+  }
+
+  async getPermissions() {
+    const { code, data } = await this.api.request<string[]>({
+      route: "permissions",
+      method: HttpMethod.GET,
+    });
+
+    if (code === 0) {
+      this.permissions = data;
     }
   }
 
@@ -72,8 +85,8 @@ export class AdminPage implements OnInit {
     }
 
     const { code, data } = await this.api.request<User>({
-      route: "admin/new-user",
-      method: "post",
+      route: "users",
+      method: HttpMethod.POST,
       body: JSON.stringify(this.forms.newUser),
     });
 
@@ -101,8 +114,8 @@ export class AdminPage implements OnInit {
     }
 
     const { code, data } = await this.api.request<string>({
-      route: "admin/reset-votes",
-      method: "post",
+      route: "anime/votes",
+      method: HttpMethod.DELETE,
     });
 
     if (code == 0) {
@@ -146,8 +159,8 @@ export class AdminPage implements OnInit {
 
   async addCustomAnime() {
     const response = await this.api.request({
-      route: "anime/custom",
-      method: "post",
+      route: "anime/shows",
+      method: HttpMethod.POST,
       body: JSON.stringify(this.forms.customAnime),
     });
 

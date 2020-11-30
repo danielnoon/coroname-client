@@ -47,6 +47,21 @@
             [(ngModel)]="forms.newUser.admin"
           ></ion-checkbox>
         </ion-item>
+        <ion-item>
+          <ion-label>Permissions</ion-label>
+          <ion-select
+            multiple="true"
+            okText="Okay"
+            cancelText="Dismiss"
+            [(ngModel)]="forms.newUser.permissions"
+          >
+            <ion-select-option
+              *ngFor="let permission of permissions"
+              [value]="permission"
+              >{{permission}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
 
         <ion-buttons class="card-buttons">
           <ion-button (click)="newAccount()" color="primary">Submit</ion-button>

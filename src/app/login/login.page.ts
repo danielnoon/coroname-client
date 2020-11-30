@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TokenResponse } from "src/models/token-response";
 import { Router } from "@angular/router";
-import { ApiService } from "../api.service";
+import { ApiService, HttpMethod } from "../api.service";
 import { User } from "../user";
 import { PopoverController } from "@ionic/angular";
 import { LoginHelpPopoverComponent } from "../login-help-popover/login-help-popover.component";
@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
 
     const res = await this.api.request<TokenResponse>({
       route: "auth/login",
-      method: "post",
+      method: HttpMethod.POST,
       headers: new Headers({ "Content-Type": "application/json" }),
       body: JSON.stringify({ username, password }),
     });
