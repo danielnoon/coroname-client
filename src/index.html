@@ -12,7 +12,12 @@
     />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="description"
+      content="Voting platform for Coroname Anime Club."
+    />
 
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
     <!-- add to homescreen for ios -->
@@ -25,14 +30,12 @@
   <body>
     <script>
       const userTheme = localStorage.getItem("theme");
-      console.log(userTheme);
 
       const browserTheme =
         matchMedia && matchMedia("prefers-color-scheme: dark")
           ? "dark"
           : "light";
 
-      console.log(browserTheme);
       document.body.classList.add(userTheme || browserTheme);
     </script>
 

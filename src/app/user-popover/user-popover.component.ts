@@ -18,11 +18,13 @@ export class UserPopoverComponent implements OnInit {
 
   ngOnInit() {
     if (User.me) {
-      this.admin = User.me.admin;
+      this.admin =
+        User.me.admin || User.me.permissions.includes("view admin dashboard");
     }
 
     User.listen(() => {
-      this.admin = User.me.admin;
+      this.admin =
+        User.me.admin || User.me.permissions.includes("view admin dashboard");
     });
 
     const darkThemeDefault = matchMedia

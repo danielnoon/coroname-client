@@ -15,3 +15,9 @@ form {
   width: min(100%, 600px);
   justify-content: center;
 }
+
+.help-wrapper {
+  margin: 0 10px;
+  display: flex;
+  flex-direction: row-reverse;
+}

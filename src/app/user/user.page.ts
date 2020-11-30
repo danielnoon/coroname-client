@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
-import { ApiService } from '../api.service';
+import { Component, OnInit } from "@angular/core";
+import { User } from "../user";
+import { ApiService, HttpMethod } from "../api.service";
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.page.html',
-  styleUrls: ['./user.page.scss'],
+  selector: "app-user",
+  templateUrl: "./user.page.html",
+  styleUrls: ["./user.page.scss"],
 })
 export class UserPage implements OnInit {
   user: User;
@@ -13,7 +13,7 @@ export class UserPage implements OnInit {
   password = "";
   email = "";
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
   ngOnInit() {
     if (User.me) {
@@ -35,13 +35,13 @@ export class UserPage implements OnInit {
 
   async update() {
     const { code } = await this.api.request({
-      route: 'users/me',
-      method: 'put',
+      route: `users/${this.user.username}`,
+      method: HttpMethod.PATCH,
       body: JSON.stringify({
         username: this.username,
         password: this.password,
-        email: this.email
-      })
+        email: this.email,
+      }),
     });
 
     if (code === 0) {

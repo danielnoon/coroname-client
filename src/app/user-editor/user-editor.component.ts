@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from '../user';
-import { ApiService } from '../api.service';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, Input } from "@angular/core";
+import { User } from "../user";
+import { ApiService, HttpMethod } from "../api.service";
+import { ModalController } from "@ionic/angular";
 
 @Component({
-  selector: 'app-user-editor',
-  templateUrl: './user-editor.component.html',
-  styleUrls: ['./user-editor.component.scss'],
+  selector: "app-user-editor",
+  templateUrl: "./user-editor.component.html",
+  styleUrls: ["./user-editor.component.scss"],
 })
 export class UserEditorComponent implements OnInit {
   @Input() user: User;
@@ -16,7 +16,7 @@ export class UserEditorComponent implements OnInit {
   admin: boolean;
   votes: number;
 
-  constructor(private api: ApiService, private modal: ModalController) { }
+  constructor(private api: ApiService, private modal: ModalController) {}
 
   ngOnInit() {
     this.newUsername = this.user.username;
@@ -30,27 +30,27 @@ export class UserEditorComponent implements OnInit {
 
   async deleteUser() {
     const { code, data } = await this.api.request({
-      route: 'admin/user/' + this.user.username,
-      method: 'delete'
+      route: "admin/user/" + this.user.username,
+      method: HttpMethod.DELETE,
     });
 
     if (code === 0) {
       this.modal.dismiss({
-        deleted: true
+        deleted: true,
       });
     }
   }
 
   async edit() {
     const { code, data } = await this.api.request({
-      route: 'admin/user/' + this.user.username,
-      method: 'put',
+      route: "users/" + this.user.username,
+      method: HttpMethod.PATCH,
       body: JSON.stringify({
         username: this.newUsername,
         resetPassword: this.resetPassword,
         admin: this.admin,
-        votes: this.votes
-      })
+        votes: this.votes,
+      }),
     });
 
     if (code === 0) {
@@ -59,7 +59,7 @@ export class UserEditorComponent implements OnInit {
       this.user.votesAvailable = this.votes;
 
       this.modal.dismiss({
-        deleted: false
+        deleted: false,
       });
     }
   }

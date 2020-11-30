@@ -1,18 +1,37 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <div slot="start" class="start">
-      <ion-title class="logo" (click)="reset()">
-        コ<span class="desktop">ロナメ</span>
-      </ion-title>
-      <ion-searchbar
-        animated
-        [(ngModel)]="query"
-        (ionChange)="search()"
-        autocomplete="off"
-      ></ion-searchbar>
-    </div>
-    <ion-buttons slot="end" class="end desktop">
-      <ion-chip outline color="dark">Votes: {{votesAvailable}}</ion-chip>
+    <ion-buttons slot="primary">
+      <ion-button *ngIf="!hasLoaded">
+        <ion-spinner slot="icon-only"></ion-spinner>
+      </ion-button>
+      <ion-button (click)="reset()" *ngIf="hasLoaded">
+        <ion-icon
+          *ngIf="!searching"
+          slot="icon-only"
+          color="dark"
+          name="refresh"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="searching"
+          slot="icon-only"
+          color="dark"
+          name="home"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="dark" slot="start" class="hide-lt-sm">コロナメ</ion-title>
+    <ion-searchbar
+      slot="secondary"
+      animated
+      [(ngModel)]="query"
+      (ionChange)="search()"
+      autocomplete="off"
+    ></ion-searchbar>
+    <ion-buttons slot="end" class="end hide-lt-sm">
+      <ion-chip outline color="dark">
+        <span class="hide-lt-md">Votes:&nbsp;</span>
+        {{votesAvailable}}
+      </ion-chip>
       <ion-chip outline color="dark" (click)="openUserPopover($event)">
         {{username}}
         <ion-avatar>
@@ -20,20 +39,22 @@
         </ion-avatar>
       </ion-chip>
     </ion-buttons>
-    <div slot="end" class="end mobile">
+    <div slot="end" class="end hide-gt-sm">
       <ion-chip (click)="openUserPopover($event)">{{votesAvailable}}</ion-chip>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event.target)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <app-listing
     *ngFor="let item of anime; trackBy: trackByAnime"
     [anime]="item"
     (update)="updateListing()"
   ></app-listing>
   <div *ngIf="anime.length < 1" class="spinner">
-    <ion-spinner *ngIf="!hasLoaded"></ion-spinner>
     <div class="empty-message" *ngIf="hasLoaded">
       <h1>Nothing's here...</h1>
       <p>

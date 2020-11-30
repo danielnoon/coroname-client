@@ -9,6 +9,11 @@
   max-width: 100%;
   width: 600px;
   margin: auto;
+  background-image: url(/assets/icon/icon.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  overflow: visible;
 }
 
 h1 {

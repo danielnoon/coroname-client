@@ -17,9 +17,13 @@
         </ion-card-header>
         <ion-item>
           <ion-label>Are you sure?</ion-label>
-          <ion-checkbox name="confirm" required [(ngModel)]="forms.reset.confirm"></ion-checkbox>
+          <ion-checkbox
+            name="confirm"
+            required
+            [(ngModel)]="forms.reset.confirm"
+          ></ion-checkbox>
         </ion-item>
-        
+
         <ion-buttons class="card-buttons">
           <ion-button (click)="resetVotes()" color="primary">Reset</ion-button>
         </ion-buttons>
@@ -31,15 +35,83 @@
         </ion-card-header>
         <ion-item>
           <ion-label position="floating">Username</ion-label>
-          <ion-input name="username" [(ngModel)]="forms.newUser.username"></ion-input>
+          <ion-input
+            name="username"
+            [(ngModel)]="forms.newUser.username"
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Admin</ion-label>
-          <ion-checkbox name="admin" [(ngModel)]="forms.newUser.admin"></ion-checkbox>
+          <ion-checkbox
+            name="admin"
+            [(ngModel)]="forms.newUser.admin"
+          ></ion-checkbox>
         </ion-item>
-        
+        <ion-item>
+          <ion-label>Permissions</ion-label>
+          <ion-select
+            multiple="true"
+            okText="Okay"
+            cancelText="Dismiss"
+            [(ngModel)]="forms.newUser.permissions"
+          >
+            <ion-select-option
+              *ngFor="let permission of permissions"
+              [value]="permission"
+              >{{permission}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+
         <ion-buttons class="card-buttons">
           <ion-button (click)="newAccount()" color="primary">Submit</ion-button>
+        </ion-buttons>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Add Custom Anime</ion-card-title>
+        </ion-card-header>
+        <ion-item>
+          <ion-label position="floating">Title</ion-label>
+          <ion-input
+            name="title"
+            [(ngModel)]="forms.customAnime.title"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Poster</ion-label>
+          <ion-input
+            name="poster"
+            [(ngModel)]="forms.customAnime.poster"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Synposis</ion-label>
+          <ion-textarea
+            name="synopsis"
+            [(ngModel)]="forms.customAnime.synopsis"
+          ></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>NSFW</ion-label>
+          <ion-toggle
+            name="nsfw"
+            [(ngModel)]="forms.customAnime.nsfw"
+          ></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Episodes</ion-label>
+          <ion-input
+            type="number"
+            name="synopsis"
+            [(ngModel)]="forms.customAnime.episodes"
+          ></ion-input>
+        </ion-item>
+        <ion-buttons class="card-buttons">
+          <ion-button (click)="addCustomAnime()" color="primary">
+            Submit
+          </ion-button>
         </ion-buttons>
       </ion-card>
 
@@ -49,6 +121,16 @@
         </ion-card-header>
         <ion-item *ngFor="let user of users" button (click)="editUser(user)">
           <span>{{ user.username }}</span>
+          <ion-icon slot="end" name="pencil"></ion-icon>
+        </ion-item>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Anime Management</ion-card-title>
+        </ion-card-header>
+        <ion-item *ngFor="let a of anime" button>
+          <span>{{ a.title }}</span>
           <ion-icon slot="end" name="pencil"></ion-icon>
         </ion-item>
       </ion-card>

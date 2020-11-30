@@ -1,6 +1,11 @@
 <ion-card>
   <div class="container">
-    <img class="poster" [src]="anime.poster" />
+    <div
+      class="poster-wrapper"
+      [style.backgroundImage]="'url(' + anime.poster + ')'"
+    >
+      <img class="poster" [src]="anime.poster" />
+    </div>
     <div class="content">
       <ion-card-header>
         <div class="title">
@@ -8,6 +13,15 @@
         </div>
         <div class="spacer"></div>
         <div class="chips">
+          <ion-chip *ngIf="anime.native" (click)="openEpisodeSelect($event)">
+            Ep. {{ anime.episode }}/{{ anime.episodes }}
+            <ion-icon
+              name="add-circle-outline"
+              color="dark"
+              (click)="incrementEpisode($event)"
+              *ngIf="permissions.includes('change episode') || admin"
+            ></ion-icon>
+          </ion-chip>
           <ion-chip *ngIf="anime.continuingSeries" color="tertiary">
             Continuing Series
           </ion-chip>
@@ -33,7 +47,9 @@
         <div class="spacer"></div>
         <ion-buttons>
           <ion-button
-            *ngIf="!anime.continuingSeries"
+            *ngIf="
+              !anime.continuingSeries && (admin || permissions.includes('vote'))
+            "
             color="primary"
             fill="solid"
             size="large"
@@ -41,13 +57,28 @@
             >{{ votedFor ? "Rescind" : "Vote" }}</ion-button
           >
           <ion-button
-            *ngIf="admin && !anime.continuingSeries"
+            *ngIf="
+              (admin || permissions.includes('change cs')) &&
+              !anime.continuingSeries
+            "
             color="secondary"
             fill="solid"
             size="large"
             (click)="setAsCS()"
             >Set as Continuing Series</ion-button
           >
+          <ion-button
+            *ngIf="
+              (admin || permissions.includes('remove from current')) &&
+              anime.thisWeek
+            "
+            color="danger"
+            fill="solid"
+            size="large"
+            (click)="remove()"
+          >
+            Remove
+          </ion-button>
         </ion-buttons>
       </ion-card-content>
     </div>

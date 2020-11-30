@@ -6,6 +6,10 @@ export class Anime {
     public synopsis: string,
     public nsfw: boolean,
     public continuingSeries: boolean,
-    public votes: number
+    public votes: number,
+    public thisWeek: boolean,
+    public episode: number,
+    public episodes: number,
+    public native: boolean
   ) {}
 }
