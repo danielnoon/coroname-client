@@ -1,6 +1,6 @@
 import { ApiService, HttpMethod } from "./api.service";
 import { Md5 } from "ts-md5/dist/md5";
-import * as decode from "jwt-decode";
+import decode from "jwt-decode";
 
 type Listener = () => void;
 
