@@ -1,0 +1,7 @@
+<ion-list-header>Your Votes</ion-list-header>
+<ion-item *ngFor="let show of votes">
+  {{ show.title }}
+  <ion-button slot="end" fill="clear" (click)="rescind(show)">
+    <ion-icon name="close" slot="icon-only" color="dark"></ion-icon>
+  </ion-button>
+</ion-item>

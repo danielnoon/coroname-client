@@ -34,6 +34,13 @@ export class ListingComponent implements OnInit {
       this.admin = User.me.admin;
       this.permissions = User.me.permissions;
       this.getVoters();
+
+      if (
+        !User.me.votedFor.includes(this.anime.kitsuId) &&
+        this.voters.some((user) => user.username === User.me.username)
+      ) {
+        this.anime.votes -= 1;
+      }
     });
 
     this.getVoters();
@@ -138,6 +145,7 @@ export class ListingComponent implements OnInit {
       event: ev,
       componentProps: {
         episode: this.anime.episode,
+        maxEpisode: this.anime.episodes,
         update: (episode: number) => {
           this.anime.episode = episode;
         },

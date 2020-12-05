@@ -9,6 +9,7 @@ import { ListingComponent } from "../listing/listing.component";
 import { UserPopoverComponent } from "../user-popover/user-popover.component";
 import { VoterDetailsComponent } from "../voter-details/voter-details.component";
 import { EpisodeSelectPopoverComponent } from "../episode-select-popover/episode-select-popover.component";
+import { VotesPopoverComponent } from "../votes-popover/votes-popover.component";
 
 @NgModule({
   imports: [
@@ -28,11 +29,7 @@ import { EpisodeSelectPopoverComponent } from "../episode-select-popover/episode
     UserPopoverComponent,
     VoterDetailsComponent,
     EpisodeSelectPopoverComponent,
-  ],
-  entryComponents: [
-    UserPopoverComponent,
-    VoterDetailsComponent,
-    EpisodeSelectPopoverComponent,
+    VotesPopoverComponent,
   ],
 })
 export class HomePageModule {}

@@ -4,6 +4,7 @@ import { ApiService, HttpMethod } from "../api.service";
 import { User } from "../user";
 import { IonRefresher, PopoverController } from "@ionic/angular";
 import { UserPopoverComponent } from "../user-popover/user-popover.component";
+import { VotesPopoverComponent } from "../votes-popover/votes-popover.component";
 
 @Component({
   selector: "app-home",
@@ -81,6 +82,16 @@ export class HomePage implements OnInit {
   async openUserPopover(e: MouseEvent) {
     const popover = await this.pop.create({
       component: UserPopoverComponent,
+      event: e,
+      translucent: true,
+    });
+
+    await popover.present();
+  }
+
+  async openVotesPopover(e: MouseEvent) {
+    const popover = await this.pop.create({
+      component: VotesPopoverComponent,
       event: e,
       translucent: true,
     });

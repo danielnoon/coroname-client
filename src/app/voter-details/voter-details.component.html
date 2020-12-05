@@ -1,6 +1,8 @@
+<ion-list-header>Voters</ion-list-header>
+
 <ion-item *ngFor="let user of users">
   <ion-avatar slot="start">
-    <img [src]="getIcon(user)">
+    <img [src]="getIcon(user)" />
   </ion-avatar>
   {{ user.username }}
 </ion-item>

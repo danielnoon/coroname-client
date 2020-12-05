@@ -19,7 +19,9 @@
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title color="dark" slot="start" class="hide-lt-sm">コロナメ</ion-title>
+    <ion-title color="dark" slot="start" class="hide-lt-sm" (click)="reset()">
+      コロナメ
+    </ion-title>
     <ion-searchbar
       slot="secondary"
       animated
@@ -28,7 +30,7 @@
       autocomplete="off"
     ></ion-searchbar>
     <ion-buttons slot="end" class="end hide-lt-sm">
-      <ion-chip outline color="dark">
+      <ion-chip outline color="dark" (click)="openVotesPopover($event)">
         <span class="hide-lt-md">Votes:&nbsp;</span>
         {{votesAvailable}}
       </ion-chip>
