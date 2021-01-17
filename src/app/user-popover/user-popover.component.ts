@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { User } from "../user";
-import { PopoverController } from "@ionic/angular";
+import { PopoverController, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
+import { FirebaseService } from "../firebase.service";
+import { ApiService } from "../api.service";
 
 @Component({
   selector: "app-user-popover",
@@ -13,8 +15,15 @@ export class UserPopoverComponent implements OnInit {
   theme = "light";
   defaultTheme = "light";
   nonDefaultTheme = false;
+  showNotifications = true;
+  notificationsEnabled = true;
 
-  constructor(private pop: PopoverController, private router: Router) {}
+  constructor(
+    private pop: PopoverController,
+    private router: Router,
+    private firebase: FirebaseService,
+    private toast: ToastController
+  ) {}
 
   ngOnInit() {
     if (User.me) {
@@ -28,7 +37,7 @@ export class UserPopoverComponent implements OnInit {
     });
 
     const darkThemeDefault = matchMedia
-      ? matchMedia("prefers-color-scheme: dark")
+      ? matchMedia("(prefers-color-scheme: dark)").matches
       : false;
     if (darkThemeDefault) {
       this.defaultTheme = "dark";
@@ -39,6 +48,65 @@ export class UserPopoverComponent implements OnInit {
     if (this.theme !== this.defaultTheme) {
       this.nonDefaultTheme = true;
     }
+
+    if (!Notification) {
+      this.showNotifications = false;
+    }
+
+    if (Notification.permission === "granted") {
+      this.firebase.getToken().then((token) => {
+        if (!token) {
+          this.notificationsEnabled = false;
+        }
+      });
+    } else if (Notification.permission === "denied") {
+      this.showNotifications = false;
+    } else {
+      this.notificationsEnabled = false;
+    }
+  }
+
+  toggleNotifications() {
+    if (this.notificationsEnabled) {
+      this.disableNotifications();
+    } else {
+      this.enableNotifications();
+    }
+  }
+
+  async enableNotifications() {
+    this.firebase.initialize();
+    const token = await this.firebase.getToken();
+    if (token) {
+      this.notificationsEnabled = true;
+      this.toast
+        .create({
+          message: "Enabled notifications!",
+          color: "success",
+          duration: 3000,
+        })
+        .then((toast) => toast.present());
+    } else {
+      this.toast
+        .create({
+          message: "Failed to enable notifications.",
+          color: "danger",
+          duration: 3000,
+        })
+        .then((toast) => toast.present());
+    }
+  }
+
+  async disableNotifications() {
+    await this.firebase.unsubscribe();
+    this.notificationsEnabled = false;
+    this.toast
+      .create({
+        message: "Disabled notifications!",
+        color: "success",
+        duration: 3000,
+      })
+      .then((toast) => toast.present());
   }
 
   dismiss() {

@@ -5,6 +5,8 @@ import { User } from "../user";
 import { IonRefresher, PopoverController } from "@ionic/angular";
 import { UserPopoverComponent } from "../user-popover/user-popover.component";
 import { VotesPopoverComponent } from "../votes-popover/votes-popover.component";
+import { FirebaseService } from "../firebase.service";
+import { SwPush } from "@angular/service-worker";
 
 @Component({
   selector: "app-home",
@@ -20,7 +22,12 @@ export class HomePage implements OnInit {
   searching = false;
   userIcon = "";
 
-  constructor(private api: ApiService, private pop: PopoverController) {}
+  constructor(
+    private api: ApiService,
+    private pop: PopoverController,
+    private firebase: FirebaseService,
+    private push: SwPush
+  ) {}
 
   ngOnInit() {
     if (User.me) {

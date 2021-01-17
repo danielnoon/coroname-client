@@ -1,11 +1,27 @@
 <ion-list-header>Preferences</ion-list-header>
-<ion-item button routerLink="/user" (click)="dismiss()">Profile</ion-item>
+<ion-item button routerLink="/user" (click)="dismiss()">
+  Profile
+  <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+</ion-item>
 <ion-item *ngIf="admin" button routerLink="/admin" (click)="dismiss()">
   Admin
+  <ion-icon slot="end" name="key-outline"></ion-icon>
 </ion-item>
 <ion-item button (click)="switchTheme()">
   Theme
   <ion-icon slot="end" *ngIf="theme == 'light'" name="sunny-outline"></ion-icon>
   <ion-icon slot="end" *ngIf="theme == 'dark'" name="moon-outline"></ion-icon>
 </ion-item>
-<ion-item button (click)="logOut()">Log Out</ion-item>
+<ion-item
+  button
+  (click)="toggleNotifications()"
+  [disabled]="!showNotifications"
+>
+  {{ notificationsEnabled ? "Disable" : "Enable" }}
+  Notifications
+  <ion-icon slot="end" name="notifications-outline"></ion-icon>
+</ion-item>
+<ion-item button (click)="logOut()">
+  Log Out
+  <ion-icon slot="end" name="log-out-outline"></ion-icon>
+</ion-item>
