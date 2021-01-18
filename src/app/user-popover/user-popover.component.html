@@ -8,9 +8,13 @@
   <ion-icon slot="end" name="key-outline"></ion-icon>
 </ion-item>
 <ion-item button (click)="switchTheme()">
-  Theme
-  <ion-icon slot="end" *ngIf="theme == 'light'" name="sunny-outline"></ion-icon>
-  <ion-icon slot="end" *ngIf="theme == 'dark'" name="moon-outline"></ion-icon>
+  Use {{ theme == "dark" ? "Light" : "Dark" }} Theme
+  <ion-icon slot="end" *ngIf="theme == 'dark'" name="sunny-outline"></ion-icon>
+  <ion-icon slot="end" *ngIf="theme == 'light'" name="moon-outline"></ion-icon>
+</ion-item>
+<ion-item>
+  Install App
+  <ion-icon slot="end" name="download-outline"></ion-icon>
 </ion-item>
 <ion-item
   button
@@ -19,7 +23,16 @@
 >
   {{ notificationsEnabled ? "Disable" : "Enable" }}
   Notifications
-  <ion-icon slot="end" name="notifications-outline"></ion-icon>
+  <ion-icon
+    *ngIf="!notificationsEnabled"
+    slot="end"
+    name="notifications-outline"
+  ></ion-icon>
+  <ion-icon
+    *ngIf="notificationsEnabled"
+    slot="end"
+    name="notifications-off-outline"
+  ></ion-icon>
 </ion-item>
 <ion-item button (click)="logOut()">
   Log Out

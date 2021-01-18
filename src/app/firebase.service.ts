@@ -30,7 +30,6 @@ export class FirebaseService {
       firebase.initializeApp(config);
     }
     FirebaseService.messaging = firebase.messaging();
-    FirebaseService.messaging.onMessage((data) => console.log(data));
   }
 
   async getToken() {

@@ -17,6 +17,7 @@ export class UserPopoverComponent implements OnInit {
   nonDefaultTheme = false;
   showNotifications = true;
   notificationsEnabled = true;
+  installed = false;
 
   constructor(
     private pop: PopoverController,
@@ -53,7 +54,9 @@ export class UserPopoverComponent implements OnInit {
       this.showNotifications = false;
     }
 
-    if (Notification.permission === "granted") {
+    const optOut = Boolean(localStorage.getItem("notificationOptOut"));
+
+    if (Notification.permission === "granted" && !optOut) {
       this.firebase.getToken().then((token) => {
         if (!token) {
           this.notificationsEnabled = false;
@@ -63,6 +66,14 @@ export class UserPopoverComponent implements OnInit {
       this.showNotifications = false;
     } else {
       this.notificationsEnabled = false;
+    }
+
+    if ((navigator as any).standalone) {
+      this.installed = true;
+    }
+
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      this.installed = true;
     }
   }
 
@@ -95,6 +106,7 @@ export class UserPopoverComponent implements OnInit {
         })
         .then((toast) => toast.present());
     }
+    localStorage.setItem("notificationOptOut", "false");
   }
 
   async disableNotifications() {
@@ -107,6 +119,7 @@ export class UserPopoverComponent implements OnInit {
         duration: 3000,
       })
       .then((toast) => toast.present());
+    localStorage.setItem("notificationOptOut", "true");
   }
 
   dismiss() {
