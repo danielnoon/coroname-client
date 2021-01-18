@@ -3,7 +3,6 @@ import { User } from "../user";
 import { PopoverController, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { FirebaseService } from "../firebase.service";
-import { ApiService } from "../api.service";
 
 @Component({
   selector: "app-user-popover",
@@ -54,9 +53,9 @@ export class UserPopoverComponent implements OnInit {
       this.showNotifications = false;
     }
 
-    const optOut = Boolean(localStorage.getItem("notificationOptOut"));
+    const optIn = localStorage.getItem("notificationOptIn");
 
-    if (Notification.permission === "granted" && !optOut) {
+    if (Notification.permission === "granted" && optIn === "true") {
       this.firebase.getToken().then((token) => {
         if (!token) {
           this.notificationsEnabled = false;
@@ -89,6 +88,7 @@ export class UserPopoverComponent implements OnInit {
     this.firebase.initialize();
     const token = await this.firebase.getToken();
     if (token) {
+      this.firebase.subscribe(token);
       this.notificationsEnabled = true;
       this.toast
         .create({
@@ -106,7 +106,7 @@ export class UserPopoverComponent implements OnInit {
         })
         .then((toast) => toast.present());
     }
-    localStorage.setItem("notificationOptOut", "false");
+    localStorage.setItem("notificationOptIn", "true");
   }
 
   async disableNotifications() {
@@ -119,7 +119,7 @@ export class UserPopoverComponent implements OnInit {
         duration: 3000,
       })
       .then((toast) => toast.present());
-    localStorage.setItem("notificationOptOut", "true");
+    localStorage.setItem("notificationOptIn", "false");
   }
 
   dismiss() {
@@ -128,6 +128,7 @@ export class UserPopoverComponent implements OnInit {
 
   logOut() {
     localStorage.clear();
+    this.firebase.unsubscribe();
     this.router.navigateByUrl("/");
     this.dismiss();
   }

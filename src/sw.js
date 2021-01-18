@@ -3271,7 +3271,6 @@ ${msgIdle}`,
 })();
 
 self.addEventListener("notificationclick", (event) => {
-  console.log("Notification clicked: ", event);
   const clickedNotification = event.notification;
   clickedNotification.close();
   const promiseChain = clients
@@ -3281,11 +3280,9 @@ self.addEventListener("notificationclick", (event) => {
     })
     .then((matchingClients) => {
       if (matchingClients.length > 0) {
-        console.log("match");
         return matchingClients[0].focus();
       } else {
-        console.log("no match");
-        return clients.openWindow("/");
+        return clients.openWindow("/home");
       }
     });
 

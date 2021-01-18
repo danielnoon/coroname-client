@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import firebase from "firebase/app";
 import "firebase/messaging";
+import { ApiService, HttpMethod } from "./api.service";
 
 const config = {
   apiKey: "AIzaSyAQ6KdgwFIus2AGjeT8exHO2eFHoPgl18E",
@@ -21,9 +22,7 @@ export class FirebaseService {
   private static vapid =
     "BBUhWtgAQN-b7hJhwLnf9wbqcStrfzCHsoupQ4ykXZpeQkQYbddj7CLpfcCyOIsFwHn0Nhr6llE0IKO-0aVJ4vg";
 
-  constructor() {
-    this.initialize();
-  }
+  constructor(private api: ApiService) {}
 
   initialize() {
     if (!firebase.apps.length) {
@@ -44,7 +43,15 @@ export class FirebaseService {
     }
   }
 
-  async unsubscribe() {
+  async subscribe(token: string) {
+    this.api.request<string>({
+      route: "beta/notifications/subscribe/all",
+      method: HttpMethod.POST,
+      body: JSON.stringify({ token }),
+    });
+  }
+
+  unsubscribe() {
     return FirebaseService.messaging.deleteToken();
   }
 }
