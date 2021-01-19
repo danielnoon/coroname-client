@@ -27,6 +27,11 @@ export class AdminPage implements OnInit {
       nsfw: false,
       episodes: 0,
     },
+    notification: {
+      title: "",
+      body: "",
+      channel: "all",
+    },
   };
 
   users: User[];
@@ -51,7 +56,7 @@ export class AdminPage implements OnInit {
       method: HttpMethod.GET,
     });
 
-    if (code == 0) {
+    if (code === 0) {
       this.users = data;
     }
   }
@@ -78,6 +83,39 @@ export class AdminPage implements OnInit {
     }
   }
 
+  async sendNotification() {
+    if (!this.forms.notification.title) {
+      this.api.error({ code: -1, message: "Title is required." });
+      return;
+    }
+
+    if (!this.forms.notification.body) {
+      this.api.error({ code: -1, message: "Body is required." });
+      return;
+    }
+
+    const { code } = await this.api.request<string>({
+      route: `beta/notifications/${this.forms.notification.channel}/messages`,
+      method: HttpMethod.POST,
+      body: JSON.stringify(this.forms.notification),
+    });
+
+    if (code === 0) {
+      const t = await this.toast.create({
+        color: "success",
+        message: `Sent notification ${this.forms.notification.title}`,
+        position: "bottom",
+        duration: 4000,
+      });
+
+      t.present();
+
+      this.forms.notification.body = "";
+      this.forms.notification.channel = "all";
+      this.forms.notification.title = "";
+    }
+  }
+
   async newAccount() {
     if (!this.forms.newUser.username) {
       this.api.error({ code: -1, message: "Username is required." });
@@ -90,7 +128,7 @@ export class AdminPage implements OnInit {
       body: JSON.stringify(this.forms.newUser),
     });
 
-    if (code == 0) {
+    if (code === 0) {
       const t = await this.toast.create({
         color: "success",
         message: `Created user ${data.username}`,
@@ -118,7 +156,7 @@ export class AdminPage implements OnInit {
       method: HttpMethod.DELETE,
     });
 
-    if (code == 0) {
+    if (code === 0) {
       const t = await this.toast.create({
         color: "success",
         message: data,

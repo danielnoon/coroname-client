@@ -31,6 +31,39 @@
 
       <ion-card>
         <ion-card-header>
+          <ion-card-title>Send Notification</ion-card-title>
+        </ion-card-header>
+
+        <ion-item>
+          <ion-label position="floating">Title</ion-label>
+          <ion-input
+            name="title"
+            [(ngModel)]="forms.notification.title"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Body</ion-label>
+          <ion-input
+            name="body"
+            [(ngModel)]="forms.notification.body"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Channel</ion-label>
+          <ion-select [(ngModel)]="forms.notification.channel">
+            <ion-select-option value="all"> All </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-buttons class="card-buttons">
+          <ion-button (click)="sendNotification()" color="primary">
+            Send
+          </ion-button>
+        </ion-buttons>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
           <ion-card-title>Add User</ion-card-title>
         </ion-card-header>
         <ion-item>
