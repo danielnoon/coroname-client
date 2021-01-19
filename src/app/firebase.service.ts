@@ -44,11 +44,12 @@ export class FirebaseService {
   }
 
   async subscribe(token: string) {
-    this.api.request<string>({
-      route: "beta/notifications/subscribe/all",
+    const response = await this.api.request<string>({
+      route: "beta/notifications/all/subscriptions",
       method: HttpMethod.POST,
       body: JSON.stringify({ token }),
     });
+    return response;
   }
 
   unsubscribe() {

@@ -26,6 +26,8 @@ export class UserPopoverComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.firebase.initialize();
+
     if (User.me) {
       this.admin =
         User.me.admin || User.me.permissions.includes("view admin dashboard");
@@ -85,18 +87,28 @@ export class UserPopoverComponent implements OnInit {
   }
 
   async enableNotifications() {
-    this.firebase.initialize();
     const token = await this.firebase.getToken();
     if (token) {
-      this.firebase.subscribe(token);
-      this.notificationsEnabled = true;
-      this.toast
-        .create({
-          message: "Enabled notifications!",
-          color: "success",
-          duration: 3000,
-        })
-        .then((toast) => toast.present());
+      const res = await this.firebase.subscribe(token);
+      if (res.code === 0) {
+        this.notificationsEnabled = true;
+        this.toast
+          .create({
+            message: "Enabled notifications!",
+            color: "success",
+            duration: 3000,
+          })
+          .then((toast) => toast.present());
+      } else {
+        await this.firebase.unsubscribe();
+        this.toast
+          .create({
+            message: "Failed to enable notifications.",
+            color: "danger",
+            duration: 3000,
+          })
+          .then((toast) => toast.present());
+      }
     } else {
       this.toast
         .create({
